@@ -7,7 +7,7 @@ A clean, production-ready Python wrapper for evaluating text responses using **S
 You can install this package directly from GitHub:
 
 ```bash
-pip install git+agentlans/skywork-reward-model
+pip install git+https://github.com/agentlans/skywork-reward-model.git
 ```
 
 ## Quick Start
