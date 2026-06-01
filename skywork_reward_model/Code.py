@@ -87,25 +87,29 @@ class SkyworkRewardModel:
         return scores
 
     def close(self) -> None:
-        """Explicitly frees up the model and tokenizer from CPU and GPU memory.
-        
-        This breaks reference hooks, forces Python garbage collection, and clears
-        the CUDA cache to maximize available VRAM for subsequent operations.
-        """
         if hasattr(self, 'model') and self.model is not None:
-            # Move model to CPU first to cleanly break GPU reference hooks
-            self.model.cpu()
+            # Check if torch still exists before moving to CPU
+            if 'torch' in globals() and torch is not None:
+                try:
+                    self.model.cpu()
+                except Exception:
+                    pass
             del self.model
             self.model = None
-
+    
         if hasattr(self, 'tokenizer') and self.tokenizer is not None:
             del self.tokenizer
             self.tokenizer = None
-
-        gc.collect()
-
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
+    
+        # Safely call gc if it hasn't been torn down
+        if 'gc' in globals() and gc is not None:
+            gc.collect()
+    
+        # Safely check torch.cuda
+        if 'torch' in globals() and torch is not None:
+            if hasattr(torch, 'cuda') and torch.cuda is not None:
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
 
     def __enter__(self):
         """Enables context manager entry."""
