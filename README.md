@@ -25,7 +25,8 @@ responses = [
 ]
 
 # 2. Evaluate with automatic VRAM cleanup
-model_path = "Skywork/Skywork-Reward-Llama-3.1-8B"
+model_path = "Skywork/Skywork-Reward-V2-Llama-3.1-8B"
+# Also consider quantized models: "agentlans/Skywork-Reward-V2-Llama-3.1-8B-8bit" and "agentlans/Skywork-Reward-V2-Llama-3.1-8B-4bit"
 
 with SkyworkRewardModel(model_path) as rm:
     scores = rm.evaluate(prompt, responses)
@@ -40,7 +41,7 @@ for response, score in zip(responses, scores):
 If you can't use a context manager, you can instantiate the class normally and manually clear the GPU memory when finished:
 
 ```python
-rm = SkyworkRewardModel("Skywork/Skywork-Reward-Llama-3.1-8B")
+rm = SkyworkRewardModel("Skywork/Skywork-Reward-V2-Llama-3.1-8B")
 scores = rm.evaluate(prompt, responses)
 
 # Explicitly free VRAM, collect garbage, and clear CUDA cache
