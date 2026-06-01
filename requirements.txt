@@ -1,0 +1,9 @@
+# Core ML Framework
+torch>=2.0.0
+
+# Hugging Face Ecosystem
+transformers>=4.40.0
+accelerate>=0.28.0
+
+# Tokenizer backend
+sentencepiece>=0.1.99
